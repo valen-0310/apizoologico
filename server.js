@@ -1,0 +1,29 @@
+require("dotenv").config();//variables de entorno puerto y bd
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");// controla politica de seguridad para conectar dos aplicaciones , 2 server independientes
+
+const app = express();
+
+// Middleware
+app.use(cors());          // Permitir solicitudes CORS
+app.use(express.json());  // Permitir recibir datos JSON en el cuerpo de la solicitud
+
+// Conectar a MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB conectado"))
+  .catch(err => console.error(err));
+
+// Rutas
+app.use("/api/animals", require("./routes/animalRoutes"));
+
+// Ruta base
+app.get("/", (req, res) => {
+  res.send("API funcionando 🚀");
+});
+
+// Puerto de conexión
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
