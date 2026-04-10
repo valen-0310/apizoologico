@@ -2,7 +2,7 @@ require("dotenv").config();//variables de entorno puerto y bd
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");// controla politica de seguridad para conectar dos aplicaciones , 2 server independientes
-const authRoutes = require("./routers/authentication");
+const authRoutes = require("./routes/authentication");
 
 const app = express();
 

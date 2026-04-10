@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Animal = require("../models/Animal");
+const verifyToken = require('./validate_token');
 
 // CREATE: Crear un nuevo animal
 router.post("/", async (req, res) => {
@@ -65,5 +66,11 @@ router.delete("/:id", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+router.get("/animals", verifyToken, (req, res) => {
+  animalSchema.find()
+    .then((data) => res.json(data))
+    .cath((error) => res.json({ message: error }))
+})
 
 module.exports = router;
